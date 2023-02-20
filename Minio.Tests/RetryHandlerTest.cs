@@ -26,10 +26,10 @@ public class RetryHandlerTest
     public async Task TestRetryPolicyOnSuccess()
     {
         var client = new MinioClient()
-            .WithEndpoint("play.min.io")
+            .WithEndpoint("play.min.io", 443)
             .WithCredentials("Q3AM3UQ867SPQQA43P2F",
                 "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
-            .WithSSL()
+            .WithSSL(true)
             .Build();
 
         var invokeCount = 0;
@@ -51,10 +51,10 @@ public class RetryHandlerTest
     public async Task TestRetryPolicyOnFailure()
     {
         var client = new MinioClient()
-            .WithEndpoint("play.min.io")
+            .WithEndpoint("play.min.io", 443)
             .WithCredentials("Q3AM3UQ867SPQQA43P2F",
                 "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
-            .WithSSL()
+            .WithSSL(true)
             .Build();
 
         var invokeCount = 0;

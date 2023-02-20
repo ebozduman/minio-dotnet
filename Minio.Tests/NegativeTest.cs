@@ -44,8 +44,9 @@ public class NegativeTest
     {
         var badName = new string('A', 260);
         var minio = new MinioClient()
-            .WithEndpoint("play.min.io")
+            .WithEndpoint("play.min.io", 443)
             .WithCredentials("Q3AM3UQ867SPQQA43P2F", "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
+            .WithSSL(true)
             .Build();
         var args = new BucketExistsArgs()
             .WithBucket(badName);
@@ -58,8 +59,9 @@ public class NegativeTest
         var badName = new string('A', 260);
         var bucketName = Guid.NewGuid().ToString("N");
         var minio = new MinioClient()
-            .WithEndpoint("play.min.io")
+            .WithEndpoint("play.min.io", 443)
             .WithCredentials("Q3AM3UQ867SPQQA43P2F", "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
+            .WithSSL(true)
             .Build();
 
         try
