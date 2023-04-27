@@ -16,6 +16,7 @@
 */
 
 using System.Net;
+using System.Reflection;
 
 namespace Minio.Functional.Tests;
 
