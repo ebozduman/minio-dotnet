@@ -28,6 +28,7 @@ internal static class PutObject
         string bucketName = "my-bucket-name",
         string objectName = "my-object-name",
         string fileName = "location-of-file",
+        IProgress<ProgressReport> progress = null,
         IServerSideEncryption sse = null)
     {
         try
@@ -48,6 +49,7 @@ internal static class PutObject
                 .WithObjectSize(filestream.Length)
                 .WithContentType("application/octet-stream")
                 .WithHeaders(metaData)
+                .WithProgress(progress)
                 .WithServerSideEncryption(sse);
             await minio.PutObjectAsync(args).ConfigureAwait(false);
 
