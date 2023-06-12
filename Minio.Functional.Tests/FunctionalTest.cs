@@ -271,10 +271,10 @@ public static class FunctionalTest
         return "minio-dotnet-example-" + result;
     }
 
-    internal static void GenerateRandomFile(string fileName)
+    internal static void GenerateRandom1GB_File(string fileName)
     {
         using var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true);
-        var fileSize = 3L * 1024 * 1024 * 1024;
+        var fileSize = 1L * 1024 * 1024 * 1024;
         var segments = fileSize / 10000;
         var last_seg = fileSize % 10000;
         using var br = new BinaryWriter(fs);
@@ -332,8 +332,10 @@ public static class FunctionalTest
             GetBucketPolicy_Test1(minioClient)
         };
 
-        await Utils.RunInParallel(coreTestsTasks, async (task, _) => { await task.ConfigureAwait(false); })
-            .ConfigureAwait(false);
+        await Utils.RunInParallel(coreTestsTasks, async (task, _) =>
+        {
+            await task.ConfigureAwait(false);
+        }).ConfigureAwait(false);
     }
 
     internal static async Task BucketExists_Test(MinioClient minio)
@@ -4807,10 +4809,10 @@ public static class FunctionalTest
     }
 
     internal static async Task GetObject_3_OffsetLength_Tests(MinioClient minio)
-        // 3 tests will run to check different values of offset and length parameters
-        // when GetObject api returns part of the object as defined by the offset
-        // and length parameters. Tests will be reported as GetObject_Test3,
-        // GetObject_Test4 and GetObject_Test5.
+    // 3 tests will run to check different values of offset and length parameters
+    // when GetObject api returns part of the object as defined by the offset
+    // and length parameters. Tests will be reported as GetObject_Test3,
+    // GetObject_Test4 and GetObject_Test5.
     {
         var startTime = DateTime.Now;
         var bucketName = GetRandomName(15);
@@ -4950,9 +4952,8 @@ public static class FunctionalTest
 
         try
         {
-            // Create a large local file
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) GenerateRandomFile(fileName);
-            else Bash("truncate -s 2G " + fileName);
+            // Create a local 1Gig file
+            GenerateRandom1GB_File(fileName);
 
             // Create the bucket
             await Setup_Test(minio, bucketName).ConfigureAwait(false);
